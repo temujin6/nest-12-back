@@ -28,11 +28,13 @@ db.connect((err) => {
 });
 
 app.get("/", (request, response) => {
-  res.send("Server ajillaj bn !!!");
+  response.send("Server ajillaj bn !!!");
 });
 
 app.get("/users", (req, res) => {
-  db.query("SELECT * FROM users", (err, results) => {
+  const { limit } = req.query;
+
+  db.query(`SELECT * FROM users limit ${limit}`, (err, results) => {
     if (err) {
       res.status(500).json({ error: err.message });
     } else {
